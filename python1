@@ -1,0 +1,114 @@
+import random
+import math
+
+# Intro
+print("Welcome to 'Long or Short Trivia'!")
+gamemode = ""
+while (gamemode != "LONG" and gamemode != "SHORT"):
+  gamemode = input("Enter either LONG or SHORT to select a gamemode: ")
+  gamemode = gamemode.upper()
+  if (gamemode != "LONG" and gamemode != "SHORT"):
+    print("Please enter either LONG or SHORT.")
+
+if (gamemode == "LONG"):
+  print("Players must enter LONGER words for MORE points. The person with the most points wins.")
+else:
+  print("Players must enter SHORTER words to get LESS points. The person with the least points wins.")
+
+# Get number of players
+playerAmount = ""
+while (not isinstance(playerAmount, int) or playerAmount < 1):
+  playerAmount = input("Enter the amount of players: ")
+  playerAmount = int(playerAmount)
+  if (playerAmount < 1):
+    print("Please enter an interger that is greater than zero")
+
+# Collect player names
+playerNames = []
+playerPoints = []
+for i in range(0, playerAmount):
+  i = i+1
+  tempPlayer = input("Enter the name of player " + str(i) + ": ")
+  tempPlayer = tempPlayer[0].upper() + tempPlayer[1:len(tempPlayer)].lower()
+  playerNames.append(tempPlayer)
+  playerPoints.append(0)
+## 3b.i - data stored in list
+## 3b.iii - variable name of list is 'playerNames'
+
+# Add any questions here
+questions = ["name a top 30 fast food chain: ", "name a top 30 board game: ", "name one of the 30 most populous countries: ", "name a computer programming language: ", "name a room in a house: ", "name a top 30 male name: ", "name a top 30 female name: ", "name a mobile phone brand: "]
+answers = [["mcdonalds", "mcdonald's", "starbucks", "subway", "taco bell", "chick-fil-a", "chick fil a", "wendys", "wendy's", "burger king", "dunkin", "dunkin donuts", "dominos", "domino's pizza", "domino's", "dominos pizza", "panera", "panera bread", "pizza hut", "chipotle", "sonic drive-in", "sonic", "sonic drive in", "kfc", "kentucky fried chicken", "arby's", "arbys", "little caesar's", "little caesars", "litte caesar's pizza", "little caesers pizza", "dairy queen"], ["monopoly", "guess who", "guess who?", "rummikub", "scrabble", "sorry!", "sorry", "trouble", "trivial pursuit", "boggle", "clue", "sequence", "candyland", "risk", "settlers of catan", "battleship", "the game of life", "game of life", "pictionary", "wit's end", "wits end", "connect 4", "connect four","aggravation", "twister", "go", "checkers", "chess", "pass the pigs", "senet", "backgammon", "axis and allies", "operation", "scattergories", "mouse trap", "mousetrap"], ["china", "republic of china", "the republic of china", "india", "usa", "us", "united states", "united states of america", "america", "the us", "the united states of america", "the us of a", "indonesia", "pakistan", "nigeria", "brazil", "bangladesh", "russia", "mexico", "japan", "philippines", "the philippines", "the philippine islands", "ethiopia", "egypt", "vietnam", "dr congo", "drc", "congo kinshasa", "congo (kinshasa)", "the democratic republic of congo", "the democratic republic of the congo", "democratic republic of the congo", "democratic republic of congo", "the drc", "iran", "turkey", "turkiye", "germany", "france", "the uk", "uk", "united kingdom", "thailand", "tanzania", "south africa", "sa", "italy", "myanmar", "south korea", "burma", "s korea", "colombia", "spain", "kenya"], ["javascript", "python", "go", "java", "kotlin", "php", "c#", "swift", "r", "ruby", "c", "c++", "matlab", "typescript", "scala", "sql", "html", "css", "nosql", "rust", "perl", "hypertext markup language", "hyper text mark up language", "hypertext mark up language", "hyper text markup language"], ["bathroom", "hallway", "foyer", "vestibule", "dining room", "theater", "pool", "indoor pool", "gym", "living room", "stairs", "stairway", "staircase", "boiler room", "closet", "stairwell", "basement", "attic", "bedroom", "guest room", "kitchen", "kitchenette", "office", "guest bedroom", "guest bed room", "mud room", "sun room", "mudroom", "sunroom", "porch", "balcony", "laundry room", "family room", "study room", "playroom", "play room", "bowling alley", "art gallery", "workshop", "garage", "driveway", "treehouse", "garden", "den", "room"], ["aiden", "aidan", "brayden", "cade", "ethan", "caleb", "noah", "jayden", "connor", "conor", "landon", "jacob", "jaxon", "jackson", "elijah", "jax", "eli", "gavin", "dylan", "alexander", "aaron", "alex", "gabriel", "tristan", "benjamin", "ben", "lucas", "lukas", "luke", "andrew", "andy", "jack", "nathan", "logan", "nicholas", "nick", "joshua", "josh", "owen", "liam", "matthew", "matt", "mat", "cole"], ["ava", "abigail", "cailyn", "madeline", "isabella", "bella", "emma", "caitlyn", "kaitlyn", "olivia", "alivia", "chloe", "brianna", "hannah", "hanna", "lily", "lilly", "sophia", "sofia", "kaylee", "kailey", "hailey", "ella", "adrianna", "isabelle", "arianna", "grace", "elizabeth", "amelia", "emilia", "aaliyah", "addison", "alissa", "alyssa", "madison", "maddy", "kylie", "keira", "kira", "paige"], ["apple", "samsung", "google", "google pixel", "pixel", "xiaomi", "huawei", "oneplus", "oppo", "vivo", "sony", "realme", "motorola", "asus", "tecno mobile", "lg", "zte", "nokia", "htc", "panasonic", "honor", "alcatel-lucent", "alcatel lucent"]]
+copiedAnswers = []
+## Sources:
+## The Street, Aug 2022, Supersized: 30 Biggest Fast-Food Chains in the U.S.
+## Reader's Digest, 30 Classic Board Games Everyone Should Own
+## World Data, The largest countries of the world
+## SimpliLearn, Jan 2023, 20 Most Popular Programming Languages to Learn in 2023
+## Baby Center, 2007, Most popular baby names of 2007
+## ICTbuz, Jan 2023, The Top 20 Mobile Photo Brands in the World 2023
+
+def findAnswer(enteredAnswer, chosenList):
+  for validAnswer in chosenList:
+    if (enteredAnswer == validAnswer):
+      copiedAnswers.append(enteredAnswer)
+      answers[randomNum].remove(enteredAnswer)
+      return True
+  return False
+## 3c.i - procedure w/ parameter, sequencing, selection & iteration
+
+def findCopy(enteredAnswer, chosenList):
+  for copy in copiedAnswers:
+    if (enteredAnswer == copy):
+      return True
+  return False
+
+# Ask questions to all players
+for i in range(0, len(questions)):
+  i = i + 1
+  randomNum = random.randint(0,len(questions)-1)
+  chosenQuestion = questions[randomNum]
+  # Calculates average
+  answerAverage = len("".join(answers[randomNum])) / len(answers[randomNum])
+  answerAverage = int(round(answerAverage, 0))
+  longestAnswer = max(answers[randomNum], key=len)
+  shortestAnswer = min(answers[randomNum], key=len)
+  for player in playerNames:
+    ## 3b.ii - list being used in program
+    answerCorrect = False
+    copiedAnswer = False
+    playerIndex = playerNames.index(player)
+    playerAnswer = input(str(player) + ", " + str(chosenQuestion))
+    playerAnswer = playerAnswer.lower()
+    # Calculates points
+    if (findAnswer(playerAnswer, answers[randomNum]) == True):
+      ## 3c.ii - procedure 'findAnswer' is called
+      if (gamemode == "LONG"):
+        playerPoints[playerIndex] = playerPoints[playerIndex] + len(playerAnswer)
+        print(playerAnswer.upper() + " is a valid answer worth " + str(len(playerAnswer)) + " points!")
+      else:
+        playerPoints[playerIndex] = playerPoints[playerIndex] + len(playerAnswer)
+        print(playerAnswer.upper() + " is a valid answer worth " + str(len(playerAnswer)) + " points!")
+    else:
+      if (gamemode == "SHORT"):
+        playerPoints[playerIndex] = playerPoints[playerIndex] + answerAverage
+      if (findCopy(playerAnswer, answers[randomNum]) == True):
+        print("Please do not copy answers.")
+      else:
+        print("Sorry, that is not a valid answer.")
+  # Report round results
+  print("-=+=-")
+  for player in playerNames:
+    print(player + ": " + str(playerPoints[playerNames.index(player)]) + " points")
+  print("The average answer for this question was worth " + str(answerAverage) + " points.")
+  if (gamemode == "LONG"):
+    print("The best possible answer was '" + longestAnswer + "'.")
+  else:
+    print("The best possible answer was '" + shortestAnswer + "'.")
+  print("-=+=-")
+  questions.pop(randomNum)
+  answers.pop(randomNum)
+    
+print("FINAL SCORES")
+for player in playerNames:
+  print(player + ": " + str(playerPoints[playerNames.index(player)]) + " points")
+print("-=+=-")
